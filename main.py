@@ -24,4 +24,25 @@ for i in range(len(grid)):
 for i in grid:
     print(i)
 
-print("Hello")
+
+print("\n")
+
+
+grid = [[""] * 9 for _ in range(12)]
+
+faces = [
+    ["w", 3, 5, 0, 2],
+    ["b", 3, 5, 3, 5],
+    ["y", 3, 5, 6, 8],
+    ["g", 3, 5, 9, 11],
+    ["r", 0, 2, 3, 5],
+    ["o", 6, 8, 3, 5]
+]
+
+for face in faces:
+    for i in range(face[3], face[4] + 1):
+        for j in range(face[1], face[2] + 1):
+            grid[i][j] = face[0]
+
+for row in grid:
+    print(row)
