@@ -23,3 +23,5 @@ for i in range(len(grid)):
 # Print grid
 for i in grid:
     print(i)
+
+print("Hello")
