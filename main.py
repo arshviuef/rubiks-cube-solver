@@ -1,33 +1,6 @@
-# Create 9x12 grid (each element initialised with empty string)
-grid = [[""]*9 for _ in range(12)]
-
-# Fill in values for grid (optimise later)
-for i in range(len(grid)):
-   for j in range(len(grid[i])):
-        if j >= 3 and j <= 5:
-            if i >= 0 and i <= 2:
-                grid[i][j] = "w"
-            elif i >= 3 and i <= 5:
-                grid[i][j] = "b"
-            elif i >= 6 and i <= 8:
-                grid[i][j] = "y"
-            else:
-                grid[i][j] = "g"
-        elif j >= 0 and j <= 2:
-            if i >= 3 and i <= 5:
-                grid[i][j] = "r"
-        elif j >= 6 and j <= 8:
-            if i >= 3 and i <= 5:
-                grid[i][j] = "o"
-
-# Print grid
-for i in grid:
-    print(i)
-
-
 print("\n")
 
-
+# Create 9x12 grid (each element initialised with empty string)
 grid = [[""] * 9 for _ in range(12)]
 
 faces = [
@@ -44,5 +17,51 @@ for face in faces:
         for j in range(face[1], face[2] + 1):
             grid[i][j] = face[0]
 
+for row in grid:
+    print(row)
+
+def R(grid):
+    col = [grid[i][5] for i in range(12)]
+    for i in range(12): 
+        grid[i][5] = col[(i+3) % 12]
+
+    #rotate right side
+    grid[3][6] = grid[3][8]
+    grid[3][7] = grid[4][8]
+    grid[3][8] = grid[5][8]
+
+    grid[3][8] = grid[5][8]
+    grid[4][8] = grid[5][7]
+    grid[5][8] = grid[5][6]
+
+    grid[5][8] = grid[5][6]
+    grid[5][7] = grid[4][6]
+    grid[5][6] = grid[3][6]
+
+    grid[5][6] = grid[3][6]
+    grid[4][6] = grid[3][7]
+    grid[3][6] = grid[3][8]
+
+    return grid
+
+def RP(grid):
+    grid = R(R(R(grid)))
+    return grid
+
+print("\n new grid")
+grid = R(grid)
+for row in grid:
+    print(row)
+
+print("\n R used 4 times")
+
+grid = (R(R(R(grid))))
+
+for row in (grid):
+    print(row)
+
+print("\n Right prime")
+
+grid = RP(grid)
 for row in grid:
     print(row)
