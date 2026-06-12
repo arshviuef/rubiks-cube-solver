@@ -1,4 +1,5 @@
 import copy
+import random
 
 # We can add parameters to specify what the grid should look like later
 def create_grid():
@@ -121,4 +122,18 @@ def D(grid):
 def DP(grid):
     return D(D(D(grid)))
 
-print_grid(B(create_grid()))
+
+def randomise(grid):
+    moves = [R, RP, L, LP, F, FP, B, BP, U, UP, D, DP]
+    move_names = ["R", "RP", "L", "LP", "F", "FP", "B", "BP", "U", "UP", "D", "DP"]
+    
+    for _ in range(15):
+        i = random.randint(0, len(moves) - 1)
+        print("Move: " + move_names[i])
+        grid = moves[i](grid)
+    
+    return grid
+
+grid = create_grid()
+grid = randomise(grid)
+print_grid(grid)
