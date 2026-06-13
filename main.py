@@ -1,6 +1,6 @@
 import copy
 import random
-
+import turtle
 
 # We can add parameters to specify what the grid should look like later
 def create_grid():
@@ -145,7 +145,7 @@ def randomise(grid):
     moves = [R, RP, L, LP, F, FP, B, BP, U, UP, D, DP]
     move_names = ["R", "RP", "L", "LP", "F", "FP", "B", "BP", "U", "UP", "D", "DP"]
 
-    for _ in range(15):
+    for _ in range(2):
         i = random.randint(0, len(moves) - 1)
         print("Move: " + move_names[i])
         grid = moves[i](grid)
@@ -153,10 +153,56 @@ def randomise(grid):
     return grid
 
 
+def draw_grid(grid):
+    CELL = 50
+    COLORS = {
+        "w": "white",
+        "b": "blue",
+        "y": "yellow",
+        "g": "green",
+        "r": "red",
+        "o": "orange",
+        "": "lightgray"
+    }
+
+    #creating a turtle object called t that will do the drawing
+    screen = turtle.Screen()
+    screen.title("Rubik's Cube Net")
+    screen.bgcolor("black")
+    t = turtle.Turtle()
+    t.speed(0)
+    turtle.tracer(0,0)
+
+    # Grid is 9 cols x 12 rows, centre it on screen
+    start_x = -(9 * CELL) / 2
+    start_y = (12 * CELL) / 2
+
+    for row in range(12):
+        for col in range(9):
+            color = COLORS[grid[row][col]]
+            x = start_x + col * CELL
+            y = start_y - row * CELL
+
+            t.penup()
+            t.goto(x, y)
+            t.pendown()
+            t.fillcolor(color)
+            t.begin_fill()
+            for _ in range(4):
+                t.forward(CELL)
+                t.right(90)
+            t.end_fill()
+
+    turtle.update()
+    turtle.done()
+
+
+
 if __name__ == "__main__":
     grid = create_grid()
     grid = randomise(grid)
     print_grid(grid)
+    
 
     count = {"w": 0, "r": 0, "g": 0, "o": 0, "b": 0, "y": 0}
     for row in grid:
@@ -166,3 +212,5 @@ if __name__ == "__main__":
 
     for key, value in count.items():
         print(f"{key}: {value}")
+
+    draw_grid(grid)
