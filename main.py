@@ -8,10 +8,10 @@ def create_grid():
     grid = [[""] * 9 for _ in range(12)]
 
     faces = [
-        ["w", 3, 5, 0, 2],
-        ["b", 3, 5, 3, 5],
-        ["y", 3, 5, 6, 8],
-        ["g", 3, 5, 9, 11],
+        ["g", 3, 5, 0, 2],
+        ["w", 3, 5, 3, 5],
+        ["b", 3, 5, 6, 8],
+        ["y", 3, 5, 9, 11],
         ["r", 0, 2, 3, 5],
         ["o", 6, 8, 3, 5],
     ]
@@ -65,7 +65,7 @@ def LP(grid):
     return L(L(L(grid)))
 
 
-def F(grid):
+def D(grid):
     gridcopy = copy.deepcopy(grid)
 
     row = [grid[5][i] for i in range(9)]
@@ -81,11 +81,11 @@ def F(grid):
     return grid
 
 
-def FP(grid):
-    return F(F(F(grid)))
+def DP(grid):
+    return D(D(D(grid)))
 
 
-def B(grid):
+def U(grid):
     gridcopy = copy.deepcopy(grid)
 
     row = [grid[3][i] for i in range(9)]
@@ -101,11 +101,11 @@ def B(grid):
     return grid
 
 
-def BP(grid):
-    return B(B(B(grid)))
+def UP(grid):
+    return U(U(U(grid)))
 
 
-def U(grid):
+def FP(grid):
     gridcopy = copy.deepcopy(grid)
 
     for i in range(3):
@@ -119,11 +119,11 @@ def U(grid):
     return grid
 
 
-def UP(grid):
-    return U(U(U(grid)))
+def F(grid):
+    return FP(FP(FP(grid)))
 
 
-def D(grid):
+def B(grid):
     gridcopy = copy.deepcopy(grid)
 
     for i in range(3):
@@ -137,15 +137,15 @@ def D(grid):
     return grid
 
 
-def DP(grid):
-    return D(D(D(grid)))
+def BP(grid):
+    return B(B(B(grid)))
 
 
 def randomise(grid):
     moves = [R, RP, L, LP, F, FP, B, BP, U, UP, D, DP]
     move_names = ["R", "RP", "L", "LP", "F", "FP", "B", "BP", "U", "UP", "D", "DP"]
 
-    for _ in range(2):
+    for _ in range(10):
         i = random.randint(0, len(moves) - 1)
         print("Move: " + move_names[i])
         grid = moves[i](grid)
@@ -174,7 +174,7 @@ def draw_grid(grid):
     turtle.tracer(0,0)
 
     # Grid is 9 cols x 12 rows, centre it on screen
-    start_x = -(9 * CELL) / 2
+    start_x = -(9 * CELL) / 2 #the negaive value shifts it to the left 
     start_y = (12 * CELL) / 2
 
     for row in range(12):
@@ -212,5 +212,4 @@ if __name__ == "__main__":
 
     for key, value in count.items():
         print(f"{key}: {value}")
-
     draw_grid(grid)
