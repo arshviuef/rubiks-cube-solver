@@ -2,7 +2,7 @@ import copy
 import random
 import turtle
 
-# We can add parameters to specify what the grid should look like later
+
 def create_grid():
     # Create 9x12 grid (each element initialised with empty string)
     grid = [[""] * 9 for _ in range(12)]
@@ -105,22 +105,22 @@ def UP(grid):
     return U(U(U(grid)))
 
 
-def FP(grid):
+def F(grid):
     gridcopy = copy.deepcopy(grid)
 
     for i in range(3):
-        grid[2][i + 3] = gridcopy[i + 3][6]
-        grid[i + 3][2] = gridcopy[2][5 - (i % 3)]
-        grid[6][i + 3] = gridcopy[i + 3][2]
-        grid[i + 3][6] = gridcopy[6][5 - (i % 3)]
+        grid[2][i + 3] = gridcopy[i + 3][2]
+        grid[i + 3][2] = gridcopy[6][5 - (i % 3)]
+        grid[6][i + 3] = gridcopy[i + 3][6]
+        grid[i + 3][6] = gridcopy[2][5 - (i % 3)]
         for j in range(3):
-            grid[i + 3][j + 3] = gridcopy[j + 3][5 - (i % 3)]
+            grid[i + 3][j + 3] = gridcopy[5 - (j % 3)][i + 3]
 
     return grid
 
 
-def F(grid):
-    return FP(FP(FP(grid)))
+def FP(grid):
+    return F(F(F(grid)))
 
 
 def B(grid):
@@ -162,19 +162,19 @@ def draw_grid(grid):
         "g": "green",
         "r": "red",
         "o": "orange",
-        "": "lightgray"
+        "": "lightgray",
     }
 
-    #creating a turtle object called t that will do the drawing
+    # creating a turtle object called t that will do the drawing
     screen = turtle.Screen()
     screen.title("Rubik's Cube Net")
     screen.bgcolor("black")
     t = turtle.Turtle()
     t.speed(0)
-    turtle.tracer(0,0)
+    turtle.tracer(0, 0)
 
     # Grid is 9 cols x 12 rows, centre it on screen
-    start_x = -(9 * CELL) / 2 #the negaive value shifts it to the left 
+    start_x = -(9 * CELL) / 2  # the negaive value shifts it to the left
     start_y = (12 * CELL) / 2
 
     for row in range(12):
@@ -197,12 +197,10 @@ def draw_grid(grid):
     turtle.done()
 
 
-
 if __name__ == "__main__":
     grid = create_grid()
     grid = randomise(grid)
     print_grid(grid)
-    
 
     count = {"w": 0, "r": 0, "g": 0, "o": 0, "b": 0, "y": 0}
     for row in grid:
