@@ -109,10 +109,10 @@ def F(grid):
     gridcopy = copy.deepcopy(grid)
 
     for i in range(3):
-        grid[2][i + 3] = gridcopy[i + 3][2]
-        grid[i + 3][2] = gridcopy[6][5 - (i % 3)]
-        grid[6][i + 3] = gridcopy[i + 3][6]
-        grid[i + 3][6] = gridcopy[2][5 - (i % 3)]
+        grid[2][i + 3] = gridcopy[5 - i][2]
+        grid[i + 3][2] = gridcopy[6][i + 3]
+        grid[6][i + 3] = gridcopy[5 - i][6]
+        grid[i + 3][6] = gridcopy[2][i + 3]
         for j in range(3):
             grid[i + 3][j + 3] = gridcopy[5 - (j % 3)][i + 3]
 
